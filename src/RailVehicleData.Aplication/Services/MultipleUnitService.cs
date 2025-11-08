@@ -4,23 +4,23 @@ using RailVehicleData.Aplication.Interfaces;
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.Exceptions;
 using RailVehicleData.Domain.ValueObjects;
-using RailVehicleData.Infrastrcture.Repositories;
 
 namespace RailVehicleData.Aplication.Services;
 
 /// <summary>
 /// Service implementation for MultipleUnit (EMU/DMU) aggregate operations.
 /// Orchestrates repository and mapping for multiple unit management.
+/// Uses dependency inversion with IMultipleUnitRepository and IVehicleRepository interfaces.
 /// </summary>
 public class MultipleUnitService : IMultipleUnitService
 {
-    private readonly MultipleUnitRepository _multipleUnitRepository;
-    private readonly VehicleRepository _vehicleRepository;
+    private readonly IMultipleUnitRepository _multipleUnitRepository;
+    private readonly IVehicleRepository _vehicleRepository;
     private readonly IMapper _mapper;
 
     public MultipleUnitService(
-        MultipleUnitRepository multipleUnitRepository,
-        VehicleRepository vehicleRepository,
+        IMultipleUnitRepository multipleUnitRepository,
+        IVehicleRepository vehicleRepository,
         IMapper mapper)
     {
         _multipleUnitRepository = multipleUnitRepository;

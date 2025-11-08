@@ -4,20 +4,20 @@ using RailVehicleData.Aplication.Interfaces;
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.Exceptions;
 using RailVehicleData.Domain.ValueObjects;
-using RailVehicleData.Infrastrcture.Repositories;
 
 namespace RailVehicleData.Aplication.Services;
 
 /// <summary>
 /// Service implementation for Vehicle aggregate operations.
 /// Orchestrates repository and mapping for vehicle management.
+/// Uses dependency inversion with IVehicleRepository interface.
 /// </summary>
 public class VehicleService : IVehicleService
 {
-    private readonly VehicleRepository _vehicleRepository;
+    private readonly IVehicleRepository _vehicleRepository;
     private readonly IMapper _mapper;
 
-    public VehicleService(VehicleRepository vehicleRepository, IMapper mapper)
+    public VehicleService(IVehicleRepository vehicleRepository, IMapper mapper)
     {
         _vehicleRepository = vehicleRepository;
         _mapper = mapper;
