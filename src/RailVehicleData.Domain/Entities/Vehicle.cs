@@ -1,6 +1,4 @@
-﻿using RailVehicleData.Domain.ValueObjects;
-
-namespace RailVehicleData.Domain.Entities;
+﻿namespace RailVehicleData.Domain.Entities;
 
 /// <summary>
 /// Represents a railway vehicle (locomotive, EMU car, wagon, etc.).
