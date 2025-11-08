@@ -50,23 +50,21 @@ var app = builder.Build();
 // Apply migrations and seed database on startup
 try
 {
-    using (var scope = app.Services.CreateScope())
+    using var scope = app.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<RailVehicleDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+    // Apply pending migrations
+    dbContext.Database.Migrate();
+
+    // Seed sample data using SeedDataService
+    var seedService = new SeedDataService(dbContext, logger);
+    var seeded = await seedService.SeedIfEmptyAsync();
+
+    if (seeded)
     {
-        var dbContext = scope.ServiceProvider.GetRequiredService<RailVehicleDbContext>();
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-        // Apply pending migrations
-        dbContext.Database.Migrate();
-
-        // Seed sample data using SeedDataService
-        var seedService = new SeedDataService(dbContext, logger);
-        var seeded = await seedService.SeedIfEmptyAsync();
-
-        if (seeded)
-        {
-            var summary = await seedService.GetSeedDataSummaryAsync();
-            logger.LogInformation("Database seeding summary: {Summary}", summary.ToString());
-        }
+        var summary = await seedService.GetSeedDataSummaryAsync();
+        logger.LogInformation("Database seeding summary: {Summary}", summary.ToString());
     }
 }
 catch (Exception ex)
