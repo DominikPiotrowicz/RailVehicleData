@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RailVehicleData.Aplication.Interfaces;
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.Exceptions;
 using RailVehicleData.Infrastrcture.Data;
@@ -8,8 +9,9 @@ namespace RailVehicleData.Infrastrcture.Repositories;
 /// <summary>
 /// Repository for MultipleUnit aggregate root.
 /// Handles all data access operations for EMU/DMU (trains).
+/// Implements IMultipleUnitRepository from Application layer for proper dependency inversion.
 /// </summary>
-public class MultipleUnitRepository
+public class MultipleUnitRepository : IMultipleUnitRepository
 {
     private readonly RailVehicleDbContext _dbContext;
 

@@ -1,5 +1,6 @@
 using RailVehicleData.Infrastrcture.Data;
 using RailVehicleData.Aplication.DependencyInjection;
+using RailVehicleData.Infrastrcture.DependencyInjection;
 using RailVehicleData.Infrastrcture.Seeders;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,8 +14,9 @@ builder.Services.AddDbContext<RailVehicleDbContext>(options =>
     )
 );
 
-// Add application services (repositories, services, mappers, etc.)
+// Add application and infrastructure services
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 
 // Add controllers
 builder.Services.AddControllers();
