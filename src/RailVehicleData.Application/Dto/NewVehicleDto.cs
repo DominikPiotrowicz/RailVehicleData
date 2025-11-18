@@ -1,4 +1,4 @@
-﻿namespace RailVehicleData.Aplication.Dto;
+﻿namespace RailVehicleData.Application.Dto;
 
 /// <summary>
 /// Data Transfer Object for creating a new Vehicle.

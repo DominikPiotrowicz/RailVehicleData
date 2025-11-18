@@ -1,6 +1,6 @@
-using RailVehicleData.Aplication.Dto;
+using RailVehicleData.Application.Dto;
 
-namespace RailVehicleData.Aplication.Interfaces;
+namespace RailVehicleData.Application.Interfaces;
 
 /// <summary>
 /// Service interface for MultipleUnit (EMU/DMU) aggregate operations.

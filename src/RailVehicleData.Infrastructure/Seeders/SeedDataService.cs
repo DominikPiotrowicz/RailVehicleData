@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
-using RailVehicleData.Infrastrcture.Data;
+using RailVehicleData.Infrastructure.Data;
 
-namespace RailVehicleData.Infrastrcture.Seeders;
+namespace RailVehicleData.Infrastructure.Seeders;
 
 /// <summary>
 /// Production-ready seeding service that wraps VehicleSeeder with logging and error handling.

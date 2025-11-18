@@ -1,4 +1,4 @@
-namespace RailVehicleData.Aplication.Dto;
+namespace RailVehicleData.Application.Dto;
 
 /// <summary>
 /// Base DTO for traction systems.

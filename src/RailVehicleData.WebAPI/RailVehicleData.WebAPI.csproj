@@ -13,8 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RailVehicleData.Domain\RailVehicleData.Domain.csproj" />
-    <ProjectReference Include="..\RailVehicleData.Aplication\RailVehicleData.Aplication.csproj" />
-    <ProjectReference Include="..\RailVehicleData.Infrastrcture\RailVehicleData.Infrastructure.csproj" />
+    <ProjectReference Include="..\RailVehicleData.Application\RailVehicleData.Application.csproj" />
+    <ProjectReference Include="..\RailVehicleData.Infrastructure\RailVehicleData.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

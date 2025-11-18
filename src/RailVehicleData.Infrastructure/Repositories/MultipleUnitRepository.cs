@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using RailVehicleData.Aplication.Interfaces;
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.Exceptions;
-using RailVehicleData.Infrastrcture.Data;
+using RailVehicleData.Infrastructure.Data;
 
-namespace RailVehicleData.Infrastrcture.Repositories;
+namespace RailVehicleData.Infrastructure.Repositories;
 
 /// <summary>
 /// Repository for MultipleUnit aggregate root.

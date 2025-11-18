@@ -1,11 +1,11 @@
 using AutoMapper;
-using RailVehicleData.Aplication.Dto;
-using RailVehicleData.Aplication.Interfaces;
+using RailVehicleData.Application.Dto;
+using RailVehicleData.Application.Interfaces;
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.Exceptions;
 using RailVehicleData.Domain.ValueObjects;
 
-namespace RailVehicleData.Aplication.Services;
+namespace RailVehicleData.Application.Services;
 
 /// <summary>
 /// Service implementation for MultipleUnit (EMU/DMU) aggregate operations.

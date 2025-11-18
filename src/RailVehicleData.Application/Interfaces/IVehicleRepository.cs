@@ -1,6 +1,6 @@
 using RailVehicleData.Domain.Entities;
 
-namespace RailVehicleData.Aplication.Interfaces;
+namespace RailVehicleData.Application.Interfaces;
 
 /// <summary>
 /// Repository abstraction for Vehicle aggregate operations.

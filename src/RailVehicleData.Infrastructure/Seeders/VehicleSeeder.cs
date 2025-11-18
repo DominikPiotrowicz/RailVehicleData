@@ -1,8 +1,8 @@
 ﻿using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.ValueObjects;
-using RailVehicleData.Infrastrcture.Data;
+using RailVehicleData.Infrastructure.Data;
 
-namespace RailVehicleData.Infrastrcture.Seeders;
+namespace RailVehicleData.Infrastructure.Seeders;
 
 /// <summary>
 /// Database seeder for sample rail vehicle data.

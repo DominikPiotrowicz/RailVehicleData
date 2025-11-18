@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RailVehicleData.Domain\RailVehicleData.Domain.csproj" />
-    <ProjectReference Include="..\RailVehicleData.Aplication\RailVehicleData.Aplication.csproj" />
   </ItemGroup>
 
 </Project>

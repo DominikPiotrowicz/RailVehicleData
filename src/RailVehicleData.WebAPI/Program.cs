@@ -1,7 +1,7 @@
-using RailVehicleData.Infrastrcture.Data;
-using RailVehicleData.Aplication.DependencyInjection;
-using RailVehicleData.Infrastrcture.DependencyInjection;
-using RailVehicleData.Infrastrcture.Seeders;
+using RailVehicleData.Infrastructure.Data;
+using RailVehicleData.Application.DependencyInjection;
+using RailVehicleData.Infrastructure.DependencyInjection;
+using RailVehicleData.Infrastructure.Seeders;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplicationBuilder.CreateBuilder(args);

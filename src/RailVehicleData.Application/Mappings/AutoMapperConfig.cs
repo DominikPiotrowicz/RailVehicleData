@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using RailVehicleData.Aplication.Dto;
+using RailVehicleData.Application.Dto;
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.ValueObjects;
 
-namespace RailVehicleData.Aplication.Mappings;
+namespace RailVehicleData.Application.Mappings;
 
 /// <summary>
 /// AutoMapper profile for mapping between Domain entities and DTOs.

@@ -48,7 +48,7 @@ The RailVehicleData project has **2 CRITICAL VIOLATIONS** of Clean Architecture 
 
 ## 2. APPLICATION LAYER ANALYSIS
 
-**Location:** `/home/user/RailVehicleData/src/RailVehicleData.Aplication/`
+**Location:** `/home/user/RailVehicleData/src/RailVehicleData.Application/`
 
 **Expected:** 
 - ONLY depends on: Domain layer
@@ -60,17 +60,17 @@ The RailVehicleData project has **2 CRITICAL VIOLATIONS** of Clean Architecture 
 
 #### VIOLATION #1: VehicleService.cs
 
-**File Path:** `/home/user/RailVehicleData/src/RailVehicleData.Aplication/Services/VehicleService.cs`
+**File Path:** `/home/user/RailVehicleData/src/RailVehicleData.Application/Services/VehicleService.cs`
 
 **Lines 1-7 (Using Statements):**
 ```csharp
 using AutoMapper;
-using RailVehicleData.Aplication.Dto;
-using RailVehicleData.Aplication.Interfaces;
+using RailVehicleData.Application.Dto;
+using RailVehicleData.Application.Interfaces;
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.Exceptions;
 using RailVehicleData.Domain.ValueObjects;
-using RailVehicleData.Infrastrcture.Repositories;  // ❌ VIOLATION
+using RailVehicleData.Infrastructure.Repositories;  // ❌ VIOLATION
 ```
 
 **Lines 15-24 (Constructor):**
@@ -95,12 +95,12 @@ public class VehicleService : IVehicleService
 **What It Should Be:**
 ```csharp
 using AutoMapper;
-using RailVehicleData.Aplication.Dto;
-using RailVehicleData.Aplication.Interfaces;
+using RailVehicleData.Application.Dto;
+using RailVehicleData.Application.Interfaces;
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.Exceptions;
 using RailVehicleData.Domain.ValueObjects;
-// ❌ REMOVE: using RailVehicleData.Infrastrcture.Repositories;
+// ❌ REMOVE: using RailVehicleData.Infrastructure.Repositories;
 
 public class VehicleService : IVehicleService
 {
@@ -117,17 +117,17 @@ public class VehicleService : IVehicleService
 
 #### VIOLATION #2: MultipleUnitService.cs
 
-**File Path:** `/home/user/RailVehicleData/src/RailVehicleData.Aplication/Services/MultipleUnitService.cs`
+**File Path:** `/home/user/RailVehicleData/src/RailVehicleData.Application/Services/MultipleUnitService.cs`
 
 **Lines 1-7 (Using Statements):**
 ```csharp
 using AutoMapper;
-using RailVehicleData.Aplication.Dto;
-using RailVehicleData.Aplication.Interfaces;
+using RailVehicleData.Application.Dto;
+using RailVehicleData.Application.Interfaces;
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.Exceptions;
 using RailVehicleData.Domain.ValueObjects;
-using RailVehicleData.Infrastrcture.Repositories;  // ❌ VIOLATION
+using RailVehicleData.Infrastructure.Repositories;  // ❌ VIOLATION
 ```
 
 **Lines 15-29 (Constructor):**
@@ -157,12 +157,12 @@ public class MultipleUnitService : IMultipleUnitService
 **What It Should Be:**
 ```csharp
 using AutoMapper;
-using RailVehicleData.Aplication.Dto;
-using RailVehicleData.Aplication.Interfaces;
+using RailVehicleData.Application.Dto;
+using RailVehicleData.Application.Interfaces;
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.Exceptions;
 using RailVehicleData.Domain.ValueObjects;
-// ❌ REMOVE: using RailVehicleData.Infrastrcture.Repositories;
+// ❌ REMOVE: using RailVehicleData.Infrastructure.Repositories;
 
 public class MultipleUnitService : IMultipleUnitService
 {
@@ -197,7 +197,7 @@ public class MultipleUnitService : IMultipleUnitService
 
 ### .csproj File Analysis:
 
-**File:** `/home/user/RailVehicleData/src/RailVehicleData.Aplication/RailVehicleData.Aplication.csproj`
+**File:** `/home/user/RailVehicleData/src/RailVehicleData.Application/RailVehicleData.Application.csproj`
 
 ```xml
 <ItemGroup>
@@ -217,7 +217,7 @@ public class MultipleUnitService : IMultipleUnitService
 
 ## 3. INFRASTRUCTURE LAYER ANALYSIS
 
-**Location:** `/home/user/RailVehicleData/src/RailVehicleData.Infrastrcture/`
+**Location:** `/home/user/RailVehicleData/src/RailVehicleData.Infrastructure/`
 
 **Expected:** 
 - Depends on: Domain + Application layers only
@@ -230,19 +230,19 @@ public class MultipleUnitService : IMultipleUnitService
 **VehicleRepository.cs:**
 ```csharp
 using Microsoft.EntityFrameworkCore;        // ✓ External dependency (allowed)
-using RailVehicleData.Aplication.Interfaces;  // ✓ Implements Application interfaces
+using RailVehicleData.Application.Interfaces;  // ✓ Implements Application interfaces
 using RailVehicleData.Domain.Entities;       // ✓ Domain dependency
 using RailVehicleData.Domain.Exceptions;     // ✓ Domain dependency
-using RailVehicleData.Infrastrcture.Data;    // ✓ Internal Infrastructure
+using RailVehicleData.Infrastructure.Data;    // ✓ Internal Infrastructure
 ```
 
 **MultipleUnitRepository.cs:**
 ```csharp
 using Microsoft.EntityFrameworkCore;           // ✓ External dependency (allowed)
-using RailVehicleData.Aplication.Interfaces;   // ✓ Implements Application interfaces
+using RailVehicleData.Application.Interfaces;   // ✓ Implements Application interfaces
 using RailVehicleData.Domain.Entities;         // ✓ Domain dependency
 using RailVehicleData.Domain.Exceptions;       // ✓ Domain dependency
-using RailVehicleData.Infrastrcture.Data;      // ✓ Internal Infrastructure
+using RailVehicleData.Infrastructure.Data;      // ✓ Internal Infrastructure
 ```
 
 **RailVehicleDbContext.cs:**
@@ -255,26 +255,26 @@ using RailVehicleData.Domain.ValueObjects; // ✓ Domain dependency
 **SeedDataService.cs:**
 ```csharp
 using Microsoft.Extensions.Logging;       // ✓ External dependency (allowed)
-using RailVehicleData.Infrastrcture.Data; // ✓ Internal Infrastructure
+using RailVehicleData.Infrastructure.Data; // ✓ Internal Infrastructure
 ```
 
 **VehicleSeeder.cs:**
 ```csharp
 using RailVehicleData.Domain.Entities;       // ✓ Domain dependency
 using RailVehicleData.Domain.ValueObjects;   // ✓ Domain dependency
-using RailVehicleData.Infrastrcture.Data;    // ✓ Internal Infrastructure
+using RailVehicleData.Infrastructure.Data;    // ✓ Internal Infrastructure
 ```
 
 **ServiceExtensions.cs:**
 ```csharp
 using Microsoft.Extensions.DependencyInjection;   // ✓ External (allowed)
-using RailVehicleData.Aplication.Interfaces;     // ✓ Application interfaces
-using RailVehicleData.Infrastrcture.Repositories; // ✓ Internal registration
+using RailVehicleData.Application.Interfaces;     // ✓ Application interfaces
+using RailVehicleData.Infrastructure.Repositories; // ✓ Internal registration
 ```
 
 ### .csproj File Analysis:
 
-**File:** `/home/user/RailVehicleData/src/RailVehicleData.Infrastrcture/RailVehicleData.Infrastructure.csproj`
+**File:** `/home/user/RailVehicleData/src/RailVehicleData.Infrastructure/RailVehicleData.Infrastructure.csproj`
 
 ```xml
 <ItemGroup>
@@ -285,7 +285,7 @@ using RailVehicleData.Infrastrcture.Repositories; // ✓ Internal registration
 
 <ItemGroup>
   <ProjectReference Include="..\RailVehicleData.Domain\RailVehicleData.Domain.csproj" />
-  <ProjectReference Include="..\RailVehicleData.Aplication\RailVehicleData.Aplication.csproj" />
+  <ProjectReference Include="..\RailVehicleData.Application\RailVehicleData.Application.csproj" />
   <!-- ✓ Correctly references Domain and Application -->
   <!-- ✗ Does NOT reference WebAPI (correct) -->
 </ItemGroup>
@@ -309,10 +309,10 @@ using RailVehicleData.Infrastrcture.Repositories; // ✓ Internal registration
 ### Program.cs Analysis:
 
 ```csharp
-using RailVehicleData.Infrastrcture.Data;              // ✓ Infrastructure
-using RailVehicleData.Aplication.DependencyInjection;  // ✓ Application DI
-using RailVehicleData.Infrastrcture.DependencyInjection; // ✓ Infrastructure DI
-using RailVehicleData.Infrastrcture.Seeders;           // ✓ Infrastructure seeders
+using RailVehicleData.Infrastructure.Data;              // ✓ Infrastructure
+using RailVehicleData.Application.DependencyInjection;  // ✓ Application DI
+using RailVehicleData.Infrastructure.DependencyInjection; // ✓ Infrastructure DI
+using RailVehicleData.Infrastructure.Seeders;           // ✓ Infrastructure seeders
 
 // ...
 builder.Services.AddApplicationServices();      // ✓ Register Application services
@@ -333,10 +333,10 @@ This allows the Application services to receive concrete repository implementati
 
 | # | Layer | File | Line | Issue Type | Current | Should Be | Severity |
 |---|-------|------|------|------------|---------|-----------|----------|
-| 1 | Application | VehicleService.cs | 7 | Illegal Import | `using RailVehicleData.Infrastrcture.Repositories;` | Remove | CRITICAL |
+| 1 | Application | VehicleService.cs | 7 | Illegal Import | `using RailVehicleData.Infrastructure.Repositories;` | Remove | CRITICAL |
 | 2 | Application | VehicleService.cs | 17 | Concrete Dependency | `VehicleRepository _vehicleRepository` | `IVehicleRepository _vehicleRepository` | CRITICAL |
 | 3 | Application | VehicleService.cs | 20 | Concrete Parameter | Constructor param: `VehicleRepository` | `IVehicleRepository` | CRITICAL |
-| 4 | Application | MultipleUnitService.cs | 7 | Illegal Import | `using RailVehicleData.Infrastrcture.Repositories;` | Remove | CRITICAL |
+| 4 | Application | MultipleUnitService.cs | 7 | Illegal Import | `using RailVehicleData.Infrastructure.Repositories;` | Remove | CRITICAL |
 | 5 | Application | MultipleUnitService.cs | 17 | Concrete Dependency | `MultipleUnitRepository _multipleUnitRepository` | `IMultipleUnitRepository _multipleUnitRepository` | CRITICAL |
 | 6 | Application | MultipleUnitService.cs | 18 | Concrete Dependency | `VehicleRepository _vehicleRepository` | `IVehicleRepository _vehicleRepository` | CRITICAL |
 | 7 | Application | MultipleUnitService.cs | 21-23 | Concrete Parameters | Constructor params: concrete classes | Constructor params: interfaces | CRITICAL |
@@ -373,7 +373,7 @@ The interfaces are correctly defined in `Application/Interfaces/` but the servic
 
 **Remove the line:**
 ```csharp
-using RailVehicleData.Infrastrcture.Repositories;
+using RailVehicleData.Infrastructure.Repositories;
 ```
 
 **Change constructor and field:**
@@ -391,7 +391,7 @@ public VehicleService(IVehicleRepository vehicleRepository, IMapper mapper)
 
 **Remove the line:**
 ```csharp
-using RailVehicleData.Infrastrcture.Repositories;
+using RailVehicleData.Infrastructure.Repositories;
 ```
 
 **Change constructor and fields:**

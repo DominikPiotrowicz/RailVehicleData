@@ -1,10 +1,10 @@
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using RailVehicleData.Aplication.Interfaces;
-using RailVehicleData.Aplication.Mappings;
-using RailVehicleData.Aplication.Services;
+using RailVehicleData.Application.Interfaces;
+using RailVehicleData.Application.Mappings;
+using RailVehicleData.Application.Services;
 
-namespace RailVehicleData.Aplication.DependencyInjection;
+namespace RailVehicleData.Application.DependencyInjection;
 
 /// <summary>
 /// Extension methods for registering application layer services in the dependency injection container.

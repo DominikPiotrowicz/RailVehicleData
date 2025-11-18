@@ -2,7 +2,7 @@
 using RailVehicleData.Domain.Entities;
 using RailVehicleData.Domain.ValueObjects;
 
-namespace RailVehicleData.Infrastrcture.Data;
+namespace RailVehicleData.Infrastructure.Data;
 
 /// <summary>
 /// Entity Framework Core DbContext for RailVehicleData.

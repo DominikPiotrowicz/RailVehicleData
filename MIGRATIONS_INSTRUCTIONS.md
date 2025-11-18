@@ -44,8 +44,8 @@ Plik: `src/RailVehicleData.WebAPI/appsettings.json` (lub `appsettings.Developmen
 Plik: `src/RailVehicleData.WebAPI/Program.cs`
 
 ```csharp
-using RailVehicleData.Infrastrcture.Data;
-using RailVehicleData.Aplication.DependencyInjection;
+using RailVehicleData.Infrastructure.Data;
+using RailVehicleData.Application.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplicationBuilder.CreateBuilder(args);
@@ -70,7 +70,7 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
 
     // Seed sample data
-    var seeder = new RailVehicleData.Infrastrcture.Seeders.VehicleSeeder(dbContext);
+    var seeder = new RailVehicleData.Infrastructure.Seeders.VehicleSeeder(dbContext);
     await seeder.SeedAsync();
 }
 
@@ -88,11 +88,11 @@ cd src/RailVehicleData.Domain
 # (powinno być OK - tylko C#)
 
 # Application
-cd ../RailVehicleData.Aplication
+cd ../RailVehicleData.Application
 dotnet add package AutoMapper --version 12.0.1
 
 # Infrastructure
-cd ../RailVehicleData.Infrastrcture
+cd ../RailVehicleData.Infrastructure
 dotnet add package Microsoft.EntityFrameworkCore --version 6.0.16
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 6.0.16
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0.16
@@ -112,15 +112,15 @@ Z katalogu root projektu (gdzie jest RailVehicleData.sln):
 
 ```bash
 dotnet ef migrations add InitialCreate \
-  --project src/RailVehicleData.Infrastrcture \
+  --project src/RailVehicleData.Infrastructure \
   --startup-project src/RailVehicleData.WebAPI
 ```
 
-Powinno stworzyć folder `Migrations/` w `RailVehicleData.Infrastrcture`.
+Powinno stworzyć folder `Migrations/` w `RailVehicleData.Infrastructure`.
 
 ### Krok 2: Zweryfikuj Migrację
 
-Plik: `src/RailVehicleData.Infrastrcture/Migrations/[timestamp]_InitialCreate.cs`
+Plik: `src/RailVehicleData.Infrastructure/Migrations/[timestamp]_InitialCreate.cs`
 
 Sprawdź czy zawiera:
 - ✅ Tabela `Vehicles`
@@ -133,7 +133,7 @@ Sprawdź czy zawiera:
 
 ```bash
 dotnet ef database update \
-  --project src/RailVehicleData.Infrastrcture \
+  --project src/RailVehicleData.Infrastructure \
   --startup-project src/RailVehicleData.WebAPI
 ```
 
@@ -177,11 +177,11 @@ SELECT MultipleUnitId, Designation, CarCount, Type FROM dbo.MultipleUnits
 ```bash
 # Pokaż informacje o migracji
 dotnet ef migrations list \
-  --project src/RailVehicleData.Infrastrcture
+  --project src/RailVehicleData.Infrastructure
 
 # Pokaż SQL, który będzie wykonany
 dotnet ef migrations script \
-  --project src/RailVehicleData.Infrastrcture \
+  --project src/RailVehicleData.Infrastructure \
   --startup-project src/RailVehicleData.WebAPI
 ```
 
@@ -191,11 +191,11 @@ Jeśli zmienisz domenę (np. dodasz pola), wykonaj:
 
 ```bash
 dotnet ef migrations add [DescriptionOfChange] \
-  --project src/RailVehicleData.Infrastrcture \
+  --project src/RailVehicleData.Infrastructure \
   --startup-project src/RailVehicleData.WebAPI
 
 dotnet ef database update \
-  --project src/RailVehicleData.Infrastrcture \
+  --project src/RailVehicleData.Infrastructure \
   --startup-project src/RailVehicleData.WebAPI
 ```
 
@@ -204,7 +204,7 @@ dotnet ef database update \
 ```bash
 # Cofnij ostatnią migrację (dane NIE będą usunięte, jeśli nie ma Down migration)
 dotnet ef database update [PreviousMigrationName] \
-  --project src/RailVehicleData.Infrastrcture \
+  --project src/RailVehicleData.Infrastructure \
   --startup-project src/RailVehicleData.WebAPI
 ```
 
@@ -250,7 +250,7 @@ Seeder automatycznie tworzy:
 - Class 153 (DMU, 2 cars, 145 km/h, 1992)
 - Hybrid-220 (Hybrid, 4 cars, 250 km/h, 2021)
 
-Aby zmodyfikować seed, edytuj: `src/RailVehicleData.Infrastrcture/Seeders/VehicleSeeder.cs`
+Aby zmodyfikować seed, edytuj: `src/RailVehicleData.Infrastructure/Seeders/VehicleSeeder.cs`
 
 ## Następne Kroki
 

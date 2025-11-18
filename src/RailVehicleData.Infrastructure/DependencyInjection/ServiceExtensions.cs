@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using RailVehicleData.Aplication.Interfaces;
-using RailVehicleData.Infrastrcture.Repositories;
+using RailVehicleData.Infrastructure.Repositories;
 
-namespace RailVehicleData.Infrastrcture.DependencyInjection;
+namespace RailVehicleData.Infrastructure.DependencyInjection;
 
 /// <summary>
 /// Extension methods for registering infrastructure services in the dependency injection container.
