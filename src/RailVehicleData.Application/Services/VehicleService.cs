@@ -112,6 +112,7 @@ public class VehicleService : IVehicleService
         }
 
         await _vehicleRepository.AddAsync(vehicle);
+        await _vehicleRepository.SaveChangesAsync();
         return _mapper.Map<VehicleDto>(vehicle);
     }
 
@@ -143,6 +144,7 @@ public class VehicleService : IVehicleService
         );
 
         await _vehicleRepository.AddAsync(wagon);
+        await _vehicleRepository.SaveChangesAsync();
         return _mapper.Map<VehicleDto>(wagon);
     }
 
@@ -176,6 +178,7 @@ public class VehicleService : IVehicleService
         var vehicle = await _vehicleRepository.GetByIdAsync(vehicleId);
         vehicle.Decommission(decommissionDate);
         await _vehicleRepository.UpdateAsync(vehicle);
+        await _vehicleRepository.SaveChangesAsync();
         return _mapper.Map<VehicleDto>(vehicle);
     }
 
@@ -185,6 +188,7 @@ public class VehicleService : IVehicleService
         var tractionSystem = CreateTractionSystemFromDto(tractionSystemDto, vehicleId);
         vehicle.AddTractionSystem(tractionSystem);
         await _vehicleRepository.UpdateAsync(vehicle);
+        await _vehicleRepository.SaveChangesAsync();
         return _mapper.Map<VehicleDto>(vehicle);
     }
 
@@ -193,6 +197,7 @@ public class VehicleService : IVehicleService
         var vehicle = await _vehicleRepository.GetByIdAsync(vehicleId);
         vehicle.RemoveTractionSystem(tractionSystemId);
         await _vehicleRepository.UpdateAsync(vehicle);
+        await _vehicleRepository.SaveChangesAsync();
         return _mapper.Map<VehicleDto>(vehicle);
     }
 
@@ -206,12 +211,14 @@ public class VehicleService : IVehicleService
 
         tractionSystem.Decommission(removalDate);
         await _vehicleRepository.UpdateAsync(vehicle);
+        await _vehicleRepository.SaveChangesAsync();
         return _mapper.Map<VehicleDto>(vehicle);
     }
 
     public async Task DeleteVehicleAsync(Guid vehicleId)
     {
         await _vehicleRepository.DeleteAsync(vehicleId);
+        await _vehicleRepository.SaveChangesAsync();
     }
 
     /// <summary>

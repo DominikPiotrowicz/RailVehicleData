@@ -45,17 +45,26 @@ public interface IMultipleUnitRepository
     Task<IEnumerable<MultipleUnit>> GetIncompleteAsync();
 
     /// <summary>
-    /// Adds a new multiple unit to the repository.
+    /// Adds a new multiple unit to the repository (staging change, not committed).
+    /// Must call SaveChangesAsync() separately to persist changes atomically.
     /// </summary>
     Task AddAsync(MultipleUnit multipleUnit);
 
     /// <summary>
-    /// Updates an existing multiple unit in the repository.
+    /// Updates an existing multiple unit in the repository (staging change, not committed).
+    /// Must call SaveChangesAsync() separately to persist changes atomically.
     /// </summary>
     Task UpdateAsync(MultipleUnit multipleUnit);
 
     /// <summary>
-    /// Removes a multiple unit from the repository by its identifier.
+    /// Removes a multiple unit from the repository (staging change, not committed).
+    /// Must call SaveChangesAsync() separately to persist changes atomically.
     /// </summary>
     Task DeleteAsync(Guid id);
+
+    /// <summary>
+    /// Commits all staged changes to the database atomically.
+    /// Should be called after Add/Update/Delete operations.
+    /// </summary>
+    Task SaveChangesAsync();
 }

@@ -105,7 +105,8 @@ public class MultipleUnitRepository : IMultipleUnitRepository
     }
 
     /// <summary>
-    /// Adds a new multiple unit to the database.
+    /// Adds a new multiple unit to the database (without committing).
+    /// SaveChangesAsync must be called by the calling service to commit atomically.
     /// </summary>
     public async Task AddAsync(MultipleUnit multipleUnit)
     {
@@ -113,11 +114,11 @@ public class MultipleUnitRepository : IMultipleUnitRepository
             throw new DomainException("Multiple unit cannot be null.");
 
         await _dbContext.MultipleUnits.AddAsync(multipleUnit);
-        await _dbContext.SaveChangesAsync();
     }
 
     /// <summary>
-    /// Updates an existing multiple unit.
+    /// Updates an existing multiple unit (without committing).
+    /// SaveChangesAsync must be called by the calling service to commit atomically.
     /// </summary>
     public async Task UpdateAsync(MultipleUnit multipleUnit)
     {
@@ -125,16 +126,24 @@ public class MultipleUnitRepository : IMultipleUnitRepository
             throw new DomainException("Multiple unit cannot be null.");
 
         _dbContext.MultipleUnits.Update(multipleUnit);
-        await _dbContext.SaveChangesAsync();
     }
 
     /// <summary>
-    /// Deletes a multiple unit by ID.
+    /// Deletes a multiple unit by ID (without committing).
+    /// SaveChangesAsync must be called by the calling service to commit atomically.
     /// </summary>
     public async Task DeleteAsync(Guid id)
     {
         var multipleUnit = await GetByIdAsync(id);
         _dbContext.MultipleUnits.Remove(multipleUnit);
+    }
+
+    /// <summary>
+    /// Commits all staged changes to the database atomically.
+    /// Must be called after Add/Update/Delete operations to persist changes.
+    /// </summary>
+    public async Task SaveChangesAsync()
+    {
         await _dbContext.SaveChangesAsync();
     }
 }

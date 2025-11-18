@@ -91,6 +91,7 @@ public class MultipleUnitService : IMultipleUnitService
         );
 
         await _multipleUnitRepository.AddAsync(multipleUnit);
+        await _multipleUnitRepository.SaveChangesAsync();
         return _mapper.Map<MultipleUnitDto>(multipleUnit);
     }
 
@@ -108,6 +109,7 @@ public class MultipleUnitService : IMultipleUnitService
         var multipleUnit = await _multipleUnitRepository.GetByIdAsync(multipleUnitId);
         multipleUnit.Decommission(decommissionDate);
         await _multipleUnitRepository.UpdateAsync(multipleUnit);
+        await _multipleUnitRepository.SaveChangesAsync();
         return _mapper.Map<MultipleUnitDto>(multipleUnit);
     }
 
@@ -122,6 +124,7 @@ public class MultipleUnitService : IMultipleUnitService
 
         multipleUnit.AddCar(vehicleId);
         await _multipleUnitRepository.UpdateAsync(multipleUnit);
+        await _multipleUnitRepository.SaveChangesAsync();
         return _mapper.Map<MultipleUnitDto>(multipleUnit);
     }
 
@@ -130,6 +133,7 @@ public class MultipleUnitService : IMultipleUnitService
         var multipleUnit = await _multipleUnitRepository.GetByIdAsync(multipleUnitId);
         multipleUnit.RemoveCar(vehicleId);
         await _multipleUnitRepository.UpdateAsync(multipleUnit);
+        await _multipleUnitRepository.SaveChangesAsync();
         return _mapper.Map<MultipleUnitDto>(multipleUnit);
     }
 
@@ -142,5 +146,6 @@ public class MultipleUnitService : IMultipleUnitService
     public async Task DeleteMultipleUnitAsync(Guid multipleUnitId)
     {
         await _multipleUnitRepository.DeleteAsync(multipleUnitId);
+        await _multipleUnitRepository.SaveChangesAsync();
     }
 }

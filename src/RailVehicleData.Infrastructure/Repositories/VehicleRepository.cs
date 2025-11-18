@@ -112,7 +112,8 @@ public class VehicleRepository : IVehicleRepository
     }
 
     /// <summary>
-    /// Adds a new vehicle to the database.
+    /// Adds a new vehicle to the database (without committing).
+    /// SaveChangesAsync must be called by the calling service to commit atomically.
     /// </summary>
     public async Task AddAsync(Vehicle vehicle)
     {
@@ -120,11 +121,11 @@ public class VehicleRepository : IVehicleRepository
             throw new DomainException("Vehicle cannot be null.");
 
         await _dbContext.Vehicles.AddAsync(vehicle);
-        await _dbContext.SaveChangesAsync();
     }
 
     /// <summary>
-    /// Updates an existing vehicle.
+    /// Updates an existing vehicle (without committing).
+    /// SaveChangesAsync must be called by the calling service to commit atomically.
     /// </summary>
     public async Task UpdateAsync(Vehicle vehicle)
     {
@@ -132,16 +133,24 @@ public class VehicleRepository : IVehicleRepository
             throw new DomainException("Vehicle cannot be null.");
 
         _dbContext.Vehicles.Update(vehicle);
-        await _dbContext.SaveChangesAsync();
     }
 
     /// <summary>
-    /// Deletes a vehicle by ID.
+    /// Deletes a vehicle by ID (without committing).
+    /// SaveChangesAsync must be called by the calling service to commit atomically.
     /// </summary>
     public async Task DeleteAsync(Guid id)
     {
         var vehicle = await GetByIdAsync(id);
         _dbContext.Vehicles.Remove(vehicle);
+    }
+
+    /// <summary>
+    /// Commits all staged changes to the database atomically.
+    /// Must be called after Add/Update/Delete operations to persist changes.
+    /// </summary>
+    public async Task SaveChangesAsync()
+    {
         await _dbContext.SaveChangesAsync();
     }
 

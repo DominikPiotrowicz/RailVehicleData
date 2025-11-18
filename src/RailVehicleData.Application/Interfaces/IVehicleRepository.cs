@@ -49,19 +49,28 @@ public interface IVehicleRepository
     Task<IEnumerable<Vehicle>> GetActiveVehiclesAsync();
 
     /// <summary>
-    /// Adds a new vehicle to the repository.
+    /// Adds a new vehicle to the repository (staging change, not committed).
+    /// Must call SaveChangesAsync() separately to persist changes atomically.
     /// </summary>
     Task AddAsync(Vehicle vehicle);
 
     /// <summary>
-    /// Updates an existing vehicle in the repository.
+    /// Updates an existing vehicle in the repository (staging change, not committed).
+    /// Must call SaveChangesAsync() separately to persist changes atomically.
     /// </summary>
     Task UpdateAsync(Vehicle vehicle);
 
     /// <summary>
-    /// Removes a vehicle from the repository by its identifier.
+    /// Removes a vehicle from the repository (staging change, not committed).
+    /// Must call SaveChangesAsync() separately to persist changes atomically.
     /// </summary>
     Task DeleteAsync(Guid id);
+
+    /// <summary>
+    /// Commits all staged changes to the database atomically.
+    /// Should be called after Add/Update/Delete operations.
+    /// </summary>
+    Task SaveChangesAsync();
 
     /// <summary>
     /// Retrieves all traction systems for a specific vehicle.
