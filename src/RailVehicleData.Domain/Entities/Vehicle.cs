@@ -89,8 +89,16 @@ public class Vehicle
     private Vehicle() { }
 
     /// <summary>
-    /// Creates a new standalone vehicle (locomotive, electric railcar, etc.).
+    /// Creates a new standalone vehicle (locomotive, electric railcar, etc.) with its own traction system.
     /// </summary>
+    /// <param name="manufacturer">The name of the vehicle manufacturer (e.g., "Bombardier", "Siemens").</param>
+    /// <param name="model">The model designation of the vehicle (e.g., "EU07", "SP32").</param>
+    /// <param name="manufacturedYear">The year the vehicle was manufactured. Must be between 1800 and the current year.</param>
+    /// <param name="commonSpecifications">The physical and operational specifications of the vehicle (length, weight, speed, etc.).</param>
+    /// <param name="commissionedDate">The date the vehicle entered service.</param>
+    /// <param name="seriesId">Optional identifier for the vehicle series (e.g., for grouping identical models).</param>
+    /// <returns>A new Vehicle instance with standalone role and no traction systems initially.</returns>
+    /// <exception cref="DomainException">Thrown if manufacturer or model are empty, manufactured year is invalid, or specifications are null.</exception>
     public static Vehicle CreateStandalone(
         string manufacturer,
         string model,
@@ -125,8 +133,17 @@ public class Vehicle
     }
 
     /// <summary>
-    /// Creates a new wagon (passenger, freight, etc.) - typically has no traction system.
+    /// Creates a new wagon (passenger, freight, etc.) as part of a multiple unit (EMU/DMU).
+    /// Wagons typically have no independent traction system - they are powered by traction units in the same multiple unit.
     /// </summary>
+    /// <param name="manufacturer">The name of the wagon manufacturer (e.g., "Bombardier", "Alstom").</param>
+    /// <param name="model">The model designation of the wagon (e.g., "Class 395", "EN79").</param>
+    /// <param name="manufacturedYear">The year the wagon was manufactured. Must be between 1800 and the current year.</param>
+    /// <param name="commonSpecifications">The physical and operational specifications of the wagon.</param>
+    /// <param name="commissionedDate">The date the wagon entered service.</param>
+    /// <param name="multipleUnitId">The identifier of the multiple unit (train set) this wagon belongs to.</param>
+    /// <returns>A new Vehicle instance with TrailerInMultipleUnit role.</returns>
+    /// <exception cref="DomainException">Thrown if manufacturer or model are empty, manufactured year is invalid, or specifications are null.</exception>
     public static Vehicle CreateWagon(
         string manufacturer,
         string model,
@@ -149,8 +166,14 @@ public class Vehicle
     }
 
     /// <summary>
-    /// Adds a traction system to this vehicle (e.g., during modernization).
+    /// Adds a traction system to this vehicle (e.g., during modernization or retrofit).
     /// </summary>
+    /// <param name="tractionSystem">The traction system to add (ElectricTraction, DieselTraction, or SteamTraction).</param>
+    /// <exception cref="DomainException">Thrown if the traction system is null, doesn't belong to this vehicle, or if this is a wagon in a multiple unit.</exception>
+    /// <remarks>
+    /// Only standalone vehicles can have traction systems. Wagons in multiple units derive power from the unit's traction vehicles.
+    /// A vehicle can have multiple traction systems (e.g., dual-supply electric locomotives).
+    /// </remarks>
     public void AddTractionSystem(TractionSystem tractionSystem)
     {
         if (tractionSystem == null)
@@ -166,8 +189,11 @@ public class Vehicle
     }
 
     /// <summary>
-    /// Removes a traction system from this vehicle (decommission).
+    /// Removes a traction system from this vehicle by its identifier.
     /// </summary>
+    /// <param name="tractionSystemId">The unique identifier of the traction system to remove.</param>
+    /// <exception cref="DomainException">Thrown if the traction system with the specified ID is not found.</exception>
+    /// <remarks>This marks the traction system as no longer part of this vehicle but doesn't delete the historical record.</remarks>
     public void RemoveTractionSystem(Guid tractionSystemId)
     {
         var system = _tractionSystems.FirstOrDefault(ts => ts.TractionSystemId == tractionSystemId);
@@ -178,8 +204,9 @@ public class Vehicle
     }
 
     /// <summary>
-    /// Gets all currently active traction systems.
+    /// Gets all currently active traction systems of this vehicle.
     /// </summary>
+    /// <returns>A read-only collection of active traction systems (those not yet removed/decommissioned).</returns>
     public IReadOnlyCollection<TractionSystem> GetActiveTractionSystems()
     {
         return _tractionSystems.Where(ts => ts.IsActive).ToList().AsReadOnly();
@@ -188,14 +215,20 @@ public class Vehicle
     /// <summary>
     /// Gets all traction systems of a specific type (e.g., ElectricTraction).
     /// </summary>
+    /// <typeparam name="T">The traction system type to retrieve (ElectricTraction, DieselTraction, or SteamTraction).</typeparam>
+    /// <returns>A read-only collection of traction systems of the specified type.</returns>
+    /// <remarks>Useful for queries like "does this vehicle have any electric traction?" or "how many diesel engines are on this train?"</remarks>
     public IReadOnlyCollection<T> GetTractionSystemsByType<T>() where T : TractionSystem
     {
         return _tractionSystems.OfType<T>().ToList().AsReadOnly();
     }
 
     /// <summary>
-    /// Decommissions this vehicle.
+    /// Marks this vehicle as decommissioned, ending its service life.
     /// </summary>
+    /// <param name="decommissionDate">The date when the vehicle was taken out of service.</param>
+    /// <exception cref="DomainException">Thrown if the decommission date is before the commission date.</exception>
+    /// <remarks>This is a business operation that marks the end of the vehicle's service life but preserves historical data.</remarks>
     public void Decommission(DateTime decommissionDate)
     {
         if (decommissionDate < CommissionedDate)
@@ -205,8 +238,14 @@ public class Vehicle
     }
 
     /// <summary>
-    /// Validates business rules (constraints).
+    /// Validates critical business rules and constraints for this vehicle.
     /// </summary>
+    /// <returns>True if all business rules are satisfied, false otherwise.</returns>
+    /// <remarks>
+    /// Business rules:
+    /// - Standalone vehicles MUST have at least one traction system to move independently.
+    /// - Wagons in multiple units CANNOT have traction systems (they are powered by the unit's traction vehicles).
+    /// </remarks>
     public bool IsValid()
     {
         // Standalone vehicles must have at least one traction system
