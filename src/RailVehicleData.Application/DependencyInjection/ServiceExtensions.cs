@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using RailVehicleData.Application.Interfaces;
 using RailVehicleData.Application.Mappings;
@@ -24,13 +23,8 @@ public static class ServiceExtensions
     /// </summary>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        // Register AutoMapper
-        var mapperConfig = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<AutoMapperConfig>();
-        });
-        var mapper = mapperConfig.CreateMapper();
-        services.AddSingleton(mapper);
+        // Register AutoMapper using built-in extension method
+        services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperConfig>());
 
         // Register Application Services
         services.AddScoped<IVehicleService, VehicleService>();
