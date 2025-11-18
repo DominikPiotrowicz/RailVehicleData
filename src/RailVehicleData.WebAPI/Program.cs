@@ -36,14 +36,19 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Add CORS if needed for frontend consumption
+// Add CORS with restricted policy for production security
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    // Get allowed origins from configuration, defaults to localhost for development
+    var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+        ?? new[] { "http://localhost:3000", "http://localhost:5173", "http://localhost" };
+
+    options.AddPolicy("RestrictedPolicy", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+              .AllowCredentials();
     });
 });
 
@@ -103,7 +108,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowAll");
+app.UseCors("RestrictedPolicy");
 
 app.UseAuthorization();
 
