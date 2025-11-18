@@ -57,23 +57,37 @@ try
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
     // Apply pending migrations
-    dbContext.Database.Migrate();
+    try
+    {
+        dbContext.Database.Migrate();
+        logger.LogInformation("Database migrations applied successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Failed to apply database migrations. The application will continue, but database operations may fail.");
+    }
 
     // Seed sample data using SeedDataService
-    var seedService = new SeedDataService(dbContext, logger);
-    var seeded = await seedService.SeedIfEmptyAsync();
-
-    if (seeded)
+    try
     {
-        var summary = await seedService.GetSeedDataSummaryAsync();
-        logger.LogInformation("Database seeding summary: {Summary}", summary.ToString());
+        var seedService = new SeedDataService(dbContext, logger);
+        var seeded = await seedService.SeedIfEmptyAsync();
+
+        if (seeded)
+        {
+            var summary = await seedService.GetSeedDataSummaryAsync();
+            logger.LogInformation("Database seeding completed. {Summary}", summary.ToString());
+        }
+    }
+    catch (Exception ex)
+    {
+        logger.LogWarning(ex, "Failed to seed the database. This may occur if the database is not ready or already populated. Application will continue.");
     }
 }
 catch (Exception ex)
 {
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-    throw;
+    logger.LogError(ex, "An unexpected error occurred during database initialization. Application will continue with best effort.");
 }
 
 // Configure the HTTP request pipeline
