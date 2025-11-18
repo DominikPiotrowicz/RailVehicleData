@@ -36,7 +36,15 @@ public class AutoMapperConfig : Profile
             .Include<DieselTraction, DieselTractionDto>()
             .Include<SteamTraction, SteamTractionDto>()
             .ForMember(dest => dest.MaxPowerKw, opt => opt.MapFrom(src => src.MaxPower != null ? src.MaxPower.Kilowatts : (int?)null))
-            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.GetType().Name));
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src =>
+                src switch
+                {
+                    ElectricTraction => "ElectricTraction",
+                    DieselTraction => "DieselTraction",
+                    SteamTraction => "SteamTraction",
+                    _ => "Unknown"
+                }
+            ));
 
         // Electric Traction mapping
         CreateMap<ElectricTraction, ElectricTractionDto>()

@@ -93,15 +93,15 @@ public class SeedDataService
             var tractionSystemCount = _dbContext.Set<RailVehicleData.Domain.Entities.TractionSystem>().Count();
 
             var electricCount = _dbContext.Vehicles
-                .Where(v => v.TractionSystems.Any(ts => ts.GetType().Name == "ElectricTraction"))
+                .Where(v => v.TractionSystems.OfType<RailVehicleData.Domain.Entities.ElectricTraction>().Any())
                 .Count();
 
             var dieselCount = _dbContext.Vehicles
-                .Where(v => v.TractionSystems.Any(ts => ts.GetType().Name == "DieselTraction"))
+                .Where(v => v.TractionSystems.OfType<RailVehicleData.Domain.Entities.DieselTraction>().Any())
                 .Count();
 
             var steamCount = _dbContext.Vehicles
-                .Where(v => v.TractionSystems.Any(ts => ts.GetType().Name == "SteamTraction"))
+                .Where(v => v.TractionSystems.OfType<RailVehicleData.Domain.Entities.SteamTraction>().Any())
                 .Count();
 
             return new SeedDataSummary
