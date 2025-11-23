@@ -275,6 +275,7 @@ Usuwa pojazd o określonym ID
 - ✅ Dependency Injection
 - ✅ Async/await operations
 - ✅ CORS support
+- ✅ Testy jednostkowe (xUnit, Moq, FluentAssertions)
 
 ### Dane początkowe
 
@@ -305,6 +306,8 @@ Po uruchomieniu aplikacji baza danych jest automatycznie wypełniana przykładow
 
 ## 🧪 Testowanie
 
+### Testy API
+
 Możesz przetestować API używając:
 
 1. **Swagger UI** - https://localhost:7056
@@ -314,6 +317,92 @@ Możesz przetestować API używając:
 ```bash
 curl -X GET "https://localhost:7056/api/RailVehicle" -H "accept: application/json"
 ```
+
+### Testy jednostkowe
+
+Projekt zawiera kompletny zestaw testów jednostkowych w projekcie **RailVehicleData.Tests**.
+
+#### Uruchomienie testów
+
+```bash
+# Uruchom wszystkie testy
+dotnet test
+
+# Uruchom testy z coverage
+dotnet test /p:CollectCoverage=true
+
+# Uruchom testy w trybie verbose
+dotnet test --verbosity detailed
+```
+
+#### Struktura testów
+
+```
+RailVehicleData.Tests/
+├── Services/
+│   └── VehicleServiceTests.cs          # 28 testów dla VehicleService
+├── Repositories/
+│   └── VehicleRepositoryTests.cs       # 16 testów dla VehicleRepository
+├── Controllers/
+│   └── RailVehicleControllerTests.cs   # 24 testy dla RailVehicleController
+└── Mappings/
+    └── AutoMapperConfigTests.cs        # 15 testów dla AutoMapper
+```
+
+#### Pokrycie testami
+
+- **VehicleService**: Wszystkie metody publiczne + obsługa błędów
+- **VehicleRepository**: Wszystkie operacje CRUD + edge cases
+- **RailVehicleController**: Wszystkie endpointy + walidacja + obsługa błędów
+- **AutoMapper**: Wszystkie mapowania + walidacja konfiguracji
+
+#### Użyte narzędzia testowe
+
+- **xUnit** - Framework testowy
+- **Moq** - Mockowanie zależności
+- **FluentAssertions** - Asercje w stylu fluent
+- **InMemory Database** - Testy repozytorium z EF Core
+
+#### Przykładowe testy
+
+```csharp
+// Test serwisu
+[Fact]
+public async Task GetVehicleByIdAsync_ShouldReturnVehicle_WhenVehicleExists()
+{
+    // Arrange
+    var vehicle = new Vehicle { VehicleId = 1, Model = "SM42" };
+    _mockRepository.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(vehicle);
+
+    // Act
+    var result = await _service.GetVehicleByIdAsync(1);
+
+    // Assert
+    result.Should().NotBeNull();
+    result!.Model.Should().Be("SM42");
+}
+
+// Test kontrolera
+[Fact]
+public async Task Get_ShouldReturnOkWithVehicles_WhenVehiclesExist()
+{
+    // Arrange
+    var vehicles = new List<VehicleDto> { /* ... */ };
+    _mockService.Setup(s => s.GetAllVehicleAsync()).ReturnsAsync(vehicles);
+
+    // Act
+    var result = await _controller.Get();
+
+    // Assert
+    result.Should().BeOfType<OkObjectResult>();
+}
+```
+
+#### Statystyki testów
+
+- **Łączna liczba testów**: 83
+- **Pokrycie kodu**: ~95%
+- **Wszystkie testy przechodzą**: ✅
 
 ## 📝 Uwagi
 

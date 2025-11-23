@@ -11,7 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailVehicleData.Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailVehicleData.Infrastructure", "RailVehicleData.Infrastructure\RailVehicleData.Infrastructure.csproj", "{6980B2D5-6EA5-41C1-8FB9-C92B6128CADA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailVehicleData.Tests", "RailVehicleData.Tests\RailVehicleData.Tests.csproj", "{B3E8F8A1-9C5D-4A2E-8F1B-2D3E4C5F6A7B}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A222D36D-4413-41D7-BAD9-EB34AFB74046}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C3D4E5F6-A7B8-4C9D-8E1F-2A3B4C5D6E7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,10 @@ Global
 		{6980B2D5-6EA5-41C1-8FB9-C92B6128CADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6980B2D5-6EA5-41C1-8FB9-C92B6128CADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6980B2D5-6EA5-41C1-8FB9-C92B6128CADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3E8F8A1-9C5D-4A2E-8F1B-2D3E4C5F6A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E8F8A1-9C5D-4A2E-8F1B-2D3E4C5F6A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E8F8A1-9C5D-4A2E-8F1B-2D3E4C5F6A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E8F8A1-9C5D-4A2E-8F1B-2D3E4C5F6A7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +52,7 @@ Global
 		{2DA3ADCE-D962-40BF-B351-89C9A2BB8F98} = {A222D36D-4413-41D7-BAD9-EB34AFB74046}
 		{6001E676-593F-4584-9C2A-DBCF90E516BE} = {A222D36D-4413-41D7-BAD9-EB34AFB74046}
 		{6980B2D5-6EA5-41C1-8FB9-C92B6128CADA} = {A222D36D-4413-41D7-BAD9-EB34AFB74046}
+		{B3E8F8A1-9C5D-4A2E-8F1B-2D3E4C5F6A7B} = {C3D4E5F6-A7B8-4C9D-8E1F-2A3B4C5D6E7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1ED1808A-9FEB-4F2F-A1C6-C5B7E56A1AD9}
